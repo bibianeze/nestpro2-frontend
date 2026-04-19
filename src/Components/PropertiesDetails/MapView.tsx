@@ -6,7 +6,8 @@ interface MapProps {
   propertyName: string;
   location: {
     fullAddress: string;
-    coordinates: { lat: number, lng: number }
+    // ---- BACKEND UPDATED: coordinates is optional since not all properties have it ----
+    coordinates?: { lat: number, lng: number }
   };
   image: string;
 }
@@ -17,7 +18,11 @@ const MapView = ({ location, image, propertyName }: MapProps) => {
 
 
   const API_KEY = 'AIzaSyBMmjIPWiWDHTU5okkQcrvp6n93hwKBLjw';
-  const position = { lat: location.coordinates.lat, lng: location.coordinates.lng };
+// ---- BACKEND UPDATED: coordinates is optional, fallback to Lagos coordinates ----
+const position = {
+  lat: location.coordinates?.lat ?? 6.5244,
+  lng: location.coordinates?.lng ?? 3.3792
+};
 
   return (
     <div className="mt-10 font-Manrope">
