@@ -3,6 +3,8 @@ import Sidebar from '../Components/AdminPage/SideBar';
 import Dashboard from '../Components/AdminPage/DashBoard';
 import ManageContent from '../Components/AdminPage/ManageContent[1]';
 import { AddPropertyContent } from '../Components/AdminPage/AddPropertyContent[1]';
+// ---- BACKEND ADDED: imported Enquiries page ----
+import Enquiries from '../Components/AdminPage/Enquiries';
 import { useContext, useEffect } from 'react';
 import { ManageContext } from '../Components/AdminPage/ManageProperty';
 
@@ -20,6 +22,9 @@ const AdminPage = () => {
       }
     } else if (location.pathname === "/adminPage/add-property") {
       setActivePage?.("Add Property");
+    // ---- BACKEND ADDED: sync enquiries page on refresh ----
+    } else if (location.pathname === "/adminPage/enquiries") {
+      setActivePage?.("Enquiries");
     } else if (location.pathname === "/adminPage" || location.pathname === "/adminPage/dashboard") {
       if (activePage !== "Add Property" && activePage !== "Update Property") {
         setActivePage?.("Dashboard");
@@ -44,6 +49,8 @@ const AdminPage = () => {
               ? <AddPropertyContent />
               : <ManageContent />
           } />
+          {/* ---- BACKEND ADDED: enquiries route ---- */}
+          <Route path="enquiries" element={<Enquiries />} />
         </Routes>
       </main>
     </div>

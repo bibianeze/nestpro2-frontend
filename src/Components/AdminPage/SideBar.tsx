@@ -22,7 +22,6 @@ const Sidebar = () => {
     return location.pathname === path;
   };
 
-  // ---- BACKEND ADDED: check activePage context for highlighting ----
   const isPageActive = (page: string) => {
     return activepage === page;
   };
@@ -42,13 +41,17 @@ const Sidebar = () => {
     navigate("/adminPage/add-property");
   };
 
-  // ---- BACKEND ADDED: admin logout clears JWT token ----
+  // ---- BACKEND ADDED: navigate to enquiries page ----
+  const handleEnquiriesClick = () => {
+    setActivePage("Enquiries");
+    navigate("/adminPage/enquiries");
+  };
+
   const handleLogout = () => {
     removeToken();
     navigate("/login");
   };
 
-  // ---- BACKEND ADDED: Dashboard is active when on /adminPage and not on Add/Update/Manage ----
   const isDashboardActive =
     isActive("/adminPage") &&
     !isPageActive("Add Property") &&
@@ -57,15 +60,14 @@ const Sidebar = () => {
     !isPageActive("For Sale") &&
     !isPageActive("For Rent") &&
     !isPageActive("Featured") &&
-    !isPageActive("Draft");
+    !isPageActive("Draft") &&
+    !isPageActive("Enquiries");
 
-  // ---- BACKEND ADDED: Add Property is active when activePage is Add or Update Property ----
   const isAddPropertyActive =
     isActive("/adminPage/add-property") ||
     isPageActive("Add Property") ||
     isPageActive("Update Property");
 
-  // ---- BACKEND ADDED: Manage Property is active when on manage page and not editing ----
   const isManageActive =
     (isActive("/adminPage/manage-property") ||
       isPageActive("All Properties") ||
@@ -76,6 +78,37 @@ const Sidebar = () => {
     !isPageActive("Add Property") &&
     !isPageActive("Update Property");
 
+  // ---- BACKEND ADDED: Enquiries is active when on enquiries page ----
+  const isEnquiriesActive =
+    isPageActive("Enquiries") ||
+    isActive("/adminPage/enquiries");
+
+  const sidebarItem = (onClick: () => void, isActive: boolean, icon: string, label: string) => (
+    <div onClick={onClick} style={{
+      display: "flex",
+      width: "260px",
+      height: "42px",
+      paddingTop: "9px",
+      paddingRight: "16px",
+      paddingBottom: "9px",
+      paddingLeft: "16px",
+      gap: "8px",
+      borderRadius: "6px",
+      cursor: "pointer",
+      backgroundColor: isActive ? "#1A3C34" : "#FFFFFF",
+    }}>
+      <img className="w-6 h-6" src={icon} alt="" />
+      <h1 style={{
+        fontFamily: "lato",
+        fontWeight: 400,
+        fontSize: "16px",
+        lineHeight: "22px",
+        verticalAlign: "middle",
+        color: isActive ? "#FFFFFF" : "#4F887B"
+      }}>{label}</h1>
+    </div>
+  );
+
   return (
     <div style={{
       width: "260px",
@@ -83,6 +116,7 @@ const Sidebar = () => {
       backgroundColor: "#FFFFFF",
       position: "relative",
       borderRightColor: "#BAB9B9",
+      minHeight: "100vh",
     }}>
       {/* Logo */}
       <div style={{
@@ -100,12 +134,11 @@ const Sidebar = () => {
           display: "flex",
           alignItems: "center"
         }}>
-          <img src={Logo} onClick={() => navigate("/")} alt="Arrow Logo" />
+          <img src={Logo} onClick={() => navigate("/")} alt="Arrow Logo" className="cursor-pointer" />
           <div style={{
             fontFamily: 'Manrope',
             fontWeight: 700,
             fontSize: "17.89px",
-            letterSpacing: "0%",
             lineHeight: "100%",
           }}>
             <h1 className="text-[#1A3C34]">NestFinder Pro</h1>
@@ -117,17 +150,14 @@ const Sidebar = () => {
         display: "flex",
         flexDirection: "column",
         width: "260px",
-        height: "212px",
-        top: "91px",
-        gap: "24px"
+        gap: "24px",
+        paddingTop: "16px",
       }}>
         <div style={{
           display: "flex",
           width: "260px",
-          height: "24px",
           paddingLeft: "24px",
           paddingRight: "24px",
-          gap: "10px"
         }}>
           <h1 style={{
             fontFamily: "lato",
@@ -138,98 +168,25 @@ const Sidebar = () => {
           }}>MAIN MENU</h1>
         </div>
 
+        {/* ---- Sidebar items ---- */}
         <div style={{
           display: "flex",
           flexDirection: "column",
           width: "260px",
-          height: "164px",
           gap: "20px"
         }}>
-
-          {/* Dashboard */}
-          <div onClick={handleClick} style={{
-            display: "flex",
-            width: "260px",
-            height: "42px",
-            paddingTop: "9px",
-            paddingRight: "16px",
-            paddingBottom: "9px",
-            paddingLeft: "16px",
-            gap: "8px",
-            borderRadius: "6px",
-            cursor: "pointer",
-            backgroundColor: isDashboardActive ? "#1A3C34" : "#FFFFFF",
-          }}>
-            <img className="w-6 h-6" src={home} alt="" />
-            <h1 style={{
-              fontFamily: "lato",
-              fontWeight: 400,
-              fontSize: "16px",
-              lineHeight: "22px",
-              verticalAlign: "middle",
-              color: isDashboardActive ? "#FFFFFF" : "#4F887B"
-            }}>Dashboard</h1>
-          </div>
-
-          {/* Add Property */}
-          <div onClick={handleAddPropertyClick} style={{
-            display: "flex",
-            width: "260px",
-            height: "42px",
-            paddingTop: "9px",
-            paddingRight: "16px",
-            paddingBottom: "9px",
-            paddingLeft: "16px",
-            gap: "8px",
-            borderRadius: "6px",
-            cursor: "pointer",
-            backgroundColor: isAddPropertyActive ? "#1A3C34" : "#FFFFFF",
-          }}>
-            <img className="w-6 h-6" src={circle} alt="" />
-            <h1 style={{
-              fontWeight: 400,
-              fontFamily: "lato",
-              fontSize: "16px",
-              lineHeight: "22px",
-              verticalAlign: "middle",
-              color: isAddPropertyActive ? "#FFFFFF" : "#4F887B"
-            }}>Add Property</h1>
-          </div>
-
-          {/* Manage Property */}
-          <div onClick={handleManageClick} style={{
-            display: "flex",
-            width: "260px",
-            height: "42px",
-            paddingTop: "9px",
-            paddingRight: "16px",
-            paddingBottom: "9px",
-            paddingLeft: "16px",
-            gap: "8px",
-            borderRadius: "6px",
-            cursor: "pointer",
-            backgroundColor: isManageActive ? "#1A3C34" : "#FFFFFF",
-          }}>
-            <img className="w-6 h-6" src={user} alt="" />
-            <h1 style={{
-              fontFamily: "lato",
-              fontWeight: 400,
-              fontSize: "16px",
-              lineHeight: "22px",
-              verticalAlign: "middle",
-              color: isManageActive ? "#FFFFFF" : "#4F887B"
-            }}>Manage Property</h1>
-          </div>
-
+          {sidebarItem(handleClick, isDashboardActive, home, "Dashboard")}
+          {sidebarItem(handleAddPropertyClick, isAddPropertyActive, circle, "Add Property")}
+          {sidebarItem(handleManageClick, isManageActive, user, "Manage Property")}
+          {/* ---- BACKEND ADDED: Enquiries sidebar item ---- */}
+          {sidebarItem(handleEnquiriesClick, isEnquiriesActive, user, "Enquiries")}
         </div>
       </div>
 
-      {/* ---- BACKEND UPDATED: logout now clears JWT token ---- */}
+      {/* Logout */}
       <div className="flex items-center absolute bottom-8 left-5">
         <img src={users} alt="" />
-        <button
-          onClick={handleLogout}
-          className="text-[#FF0000]">
+        <button onClick={handleLogout} className="text-[#FF0000]">
           logout
         </button>
       </div>
