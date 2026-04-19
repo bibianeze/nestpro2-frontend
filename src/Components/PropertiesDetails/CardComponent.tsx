@@ -1,5 +1,4 @@
 import { useState } from "react"
-import call from "/src/assets/call.png"
 
 interface agentForm {
   agentName: string;
@@ -21,31 +20,32 @@ const CardComponent = ({ agentName, agentPhone }: agentForm) => {
   };
 
   const handleWhatsApp = () => {
-    // ---- remove + and spaces from phone number for WhatsApp URL ----
+    // ---- remove all non-digits for WhatsApp URL ----
     const cleaned = agentPhone.replace(/\D/g, "");
     window.open(`https://wa.me/${cleaned}`, "_blank");
   };
 
   return (
     <>
-      {/* Agent Card */}
-      <div className="font-Manrope flex flex-col justify-evenly bg-[#FFFFFF] w-full lg:w-[387px] h-[160px] rounded-[10px] border-1 border-[#918F8F] p-4 mb-10">
-        <h2 className="text-2xl">Agent Detail</h2>
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col justify-center">
-            <h1 className="font-bold text-[16px]">{agentName}</h1>
-            <p className="text-gray-500 text-[14px]">Real Estate Agent</p>
-          </div>
+      {/* ---- Agent Card — full card is clickable to open modal ---- */}
+      {/* ---- REMOVED: agent image ---- */}
+      <div
+        onClick={() => setShowModal(true)}
+        className="font-Manrope flex flex-col gap-3 bg-[#FFFFFF] w-full lg:w-[387px] rounded-[10px] border border-[#918F8F] p-4 mb-10 cursor-pointer hover:shadow-md transition-all">
+        <h2 className="text-2xl font-bold text-[#023337]">Agent Detail</h2>
+        <div className="flex flex-col">
+          <h1 className="font-bold text-[16px] text-[#0A1916]">{agentName}</h1>
+          <p className="text-gray-500 text-[14px]">Real Estate Agent</p>
         </div>
-        <div
-          onClick={() => setShowModal(true)}
-          className="flex w-full h-[49px] bg-[#1A3C34] items-center justify-center rounded-[10px] text-white cursor-pointer hover:bg-[#023337]">
-          <img className="w-5 h-5 mx-2" src={call} alt="" />
+        <div className="flex w-full h-[49px] bg-[#1A3C34] items-center justify-center rounded-[10px] text-white gap-2">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
           <p>Call Agent</p>
         </div>
       </div>
 
-      {/* Agent Contact Modal */}
+      {/* ---- Agent Contact Modal ---- */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] p-4">
           <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm flex flex-col gap-5">
@@ -70,7 +70,7 @@ const CardComponent = ({ agentName, agentPhone }: agentForm) => {
             {/* Action Buttons */}
             <div className="flex flex-col gap-3">
 
-              {/* Call directly */}
+              {/* Call directly — opens phone dialer ---- */}
               <button
                 onClick={handleCall}
                 className="flex items-center justify-center gap-2 w-full h-[50px] bg-[#1A3C34] text-white rounded-xl font-semibold text-[15px] hover:bg-[#023337]">
@@ -80,7 +80,7 @@ const CardComponent = ({ agentName, agentPhone }: agentForm) => {
                 Call Agent
               </button>
 
-              {/* WhatsApp */}
+              {/* WhatsApp — opens WhatsApp chat ---- */}
               <button
                 onClick={handleWhatsApp}
                 className="flex items-center justify-center gap-2 w-full h-[50px] bg-[#25D366] text-white rounded-xl font-semibold text-[15px] hover:bg-[#1da851]">
@@ -90,14 +90,14 @@ const CardComponent = ({ agentName, agentPhone }: agentForm) => {
                 Chat on WhatsApp
               </button>
 
-              {/* Copy number */}
+              {/* Copy number ---- */}
               <button
                 onClick={handleCopy}
                 className="flex items-center justify-center gap-2 w-full h-[50px] border-2 border-[#1A3C34] text-[#1A3C34] rounded-xl font-semibold text-[15px] hover:bg-[#f9fafb]">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
-                {copied ? "Copied!" : "Copy Number"}
+                {copied ? "✓ Copied!" : "Copy Number"}
               </button>
 
             </div>
