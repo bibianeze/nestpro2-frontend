@@ -121,14 +121,14 @@ const PropertyDetails = () => {
         </div>
         <div className="flex flex-col gap-5">
           <CardComponent agentPhone={property.agentPhone} agentName={property.agentName} />
-          <AgentForm />
+         <AgentForm propertyId={property._id} />
         </div>
       </div>
 
       <div className="flex-col lg:flex-row gap-10 flex md:hidden">
         <PropertiesDetail property={property} />
         <CardComponent agentPhone={property.agentPhone} agentName={property.agentName} />
-        <AgentForm />
+        <AgentForm propertyId={property._id} />
         <MapView
           location={property.location}
           image={property.images[0] || "/src/assets/housing.jpg"}

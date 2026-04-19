@@ -149,3 +149,50 @@ export const getUsersCount = async () => {
   });
   return res.json();
 };
+
+
+
+// ENQUIRY FORM
+
+// ---- Submit enquiry (public) ----
+export const submitEnquiry = async (data: {
+  name: string;
+  email: string;
+  message: string;
+  propertyId: string;
+}) => {
+  const res = await fetch(`${BASE_URL}/api/enquiries`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+};
+
+// ---- Get all enquiries (admin only) ----
+export const getEnquiries = async () => {
+  const res = await fetch(`${BASE_URL}/api/enquiries`, {
+    method: "GET",
+    headers: buildHeaders(true),
+  });
+  return res.json();
+};
+
+// ---- Update enquiry status (admin only) ----
+export const updateEnquiryStatus = async (id: string, status: string) => {
+  const res = await fetch(`${BASE_URL}/api/enquiries/${id}`, {
+    method: "PUT",
+    headers: buildHeaders(true),
+    body: JSON.stringify({ status }),
+  });
+  return res.json();
+};
+
+// ---- Delete enquiry (admin only) ----
+export const deleteEnquiry = async (id: string) => {
+  const res = await fetch(`${BASE_URL}/api/enquiries/${id}`, {
+    method: "DELETE",
+    headers: buildHeaders(true),
+  });
+  return res.json();
+};
