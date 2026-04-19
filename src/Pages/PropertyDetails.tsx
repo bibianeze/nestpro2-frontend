@@ -153,7 +153,7 @@ const PropertyDetails = () => {
                   {/* ---- BACKEND UPDATED: images[0] instead of image ---- */}
                   <img
                     className="h-[322px] w-full object-cover"
-                    src={result.images[0] || "/src/assets/housing.jpg"}
+                    src={result.images[0] || "https://placehold.co/387x322?text=No+Image"}
                     alt={result.propertyName}
                   />
                   <div className="h-[227px] p-5 flex flex-col gap-[19px]">

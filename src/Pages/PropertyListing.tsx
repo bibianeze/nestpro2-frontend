@@ -336,7 +336,7 @@ const PropertyPage: FC<PropertyProps> = ({ isLoggedIn, setShowModal }) => {
                   {/* ---- BACKEND REMOVED: result.image single string ---- */}
                   <img
                     className="h-[322px] w-full object-cover"
-                    src={result.images[0] || "/src/assets/housing.jpg"}
+                   src={result.images[0] || "https://placehold.co/387x322?text=No+Image"}
                     alt={result.propertyName}
                   />
 

@@ -98,7 +98,7 @@ const RealDataFetching: FC<RealDataFetchingProps> = ({ isLoggedIn, setShowModal 
             {/* ---- BACKEND UPDATED: images is now an array, use images[0] ---- */}
             <img
               className="h-[322px] w-full max-w-[365px] md:max-w-[387px] rounded-tl-[10px] rounded-tr-[10px]"
-              src={result.images[0] || "/src/assets/housing.jpg"}
+              src={result.images[0] || "https://placehold.co/387x322?text=No+Image"}
               alt={result.propertyName}
             />
 
